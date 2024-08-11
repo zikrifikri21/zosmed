@@ -3,6 +3,7 @@ import { ref } from "vue";
 import PostModal from "./PostModal.vue";
 import { usePage } from "@inertiajs/vue3";
 import { PlusIcon } from "@heroicons/vue/24/solid";
+import ListStories from "./Stories/ListStories.vue";
 
 const authUser = usePage().props.auth.user;
 const showModal = ref(false);
@@ -56,17 +57,25 @@ function showCreatePostModal() {
             </div>
             <PostModal :post="newPost" :group="group" v-model="showModal" />
         </div>
-        <div class="flex flex-col" v-for="following in followings">
-            <div
-                class="border-2 border-gray-200 bg-white dark:bg-gray-800 text-gray-500 dark:border-gray-700 rounded-xl cursor-pointer"
-            >
-                <div class="w-20">
-                    <img
-                        :src="following.avatar_url"
-                        class="w-full p-1 h-24 object-cover rounded-xl"
-                    />
-                </div>
-            </div>
-        </div>
+        <!-- <pre>{{ followings }}</pre> -->
+        <ListStories v-if="followings" :followings="followings" />
     </div>
 </template>
+<style>
+video::-webkit-media-controls {
+    display: none !important;
+}
+
+video::-moz-media-controls {
+    display: none !important;
+}
+
+video::media-controls {
+    display: none !important;
+}
+
+video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    -webkit-appearance: none;
+}
+</style>

@@ -16,8 +16,8 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         $img = $this->avatar_path
-            ? Storage::url($this->avatar_path)
-            : asset('img/default_avatar.jpeg');
+        ? Storage::url($this->avatar_path)
+        : asset('img/default_avatar.jpeg');
 
         return [
             "id" => $this->id,
@@ -30,6 +30,7 @@ class UserResource extends JsonResource
             'pinned_post_id' => $this->pinned_post_id,
             "cover_url" => $this->cover_path ? Storage::url($this->cover_path) : null,
             "avatar_url" => $img,
+            "stories" => StoriesResource::collection($this->stories),
         ];
     }
 }

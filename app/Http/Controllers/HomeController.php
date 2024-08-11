@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Enums\GroupUserStatus;
 use App\Http\Resources\GroupResource;
 use App\Http\Resources\PostResource;
+use App\Http\Resources\StoriesResource;
 use App\Http\Resources\UserResource;
 use App\Models\Groups;
 use App\Models\Posts;

@@ -22,6 +22,7 @@
         "@ckeditor/ckeditor5-vue": "^5.1.0",
         "@headlessui/vue": "^1.7.17",
         "@heroicons/vue": "^2.1.1",
-        "@vueuse/core": "^10.11.0"
+        "@vueuse/core": "^10.11.0",
+        "vue-insta-stories": "^0.9.8"
     }
 }
