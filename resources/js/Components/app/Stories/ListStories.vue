@@ -24,7 +24,8 @@ function openStoryModal(following) {
         <div @click="openStoryModal(following)"
             class="border-2 border-gray-200 bg-white dark:bg-gray-800 text-gray-500 dark:border-gray-700 rounded-xl cursor-pointer">
             <div class="w-20">
-                <img :src="following.avatar_url" class="w-full p-1 h-24 object-cover rounded-xl" />
+                <img :src="following.avatar_url" class="w-full p-1 h-24 object-cover rounded-xl"
+                    :alt="'zosmed' + following.name" />
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@ defineProps({
 <template>
     <div class="mb-3 cursor-pointer hover:bg-gray-100">
         <div class="flex items-center gap-2 py-2 px-2">
-            <img :src="image" alt="" class="w-[32px] rounded-full" />
+            <img :src="image" alt="" class="w-[32px] rounded-full" :alt="'zosmed' + title" />
             <div>
                 <h1 class="font-black text-lg">{{ title }}</h1>
             </div>

@@ -152,7 +152,7 @@ function followUser() {
                     class="absolute top-2 right-2"
                     v-if="authUser && user.id === authUser.id"
                 >
-                    <button
+                    <button aria-label="true"
                         v-if="!coverImageSrc"
                         class="bg-gray-50 hover:bg-gray-100 text-gray-800 py-1 px-2 text-xs rounded flex items-center opacity-0 group-hover:opacity-100 transition"
                     >
@@ -169,14 +169,14 @@ function followUser() {
                         v-else
                         class="flex gap-2 bg-white p-2 opacity-0 group-hover:opacity-100"
                     >
-                        <button
+                        <button aria-label="true"
                             @click="cancleCoverImage"
                             class="bg-gray-50 hover:bg-gray-100 text-gray-800 py-1 px-2 text-xs rounded flex items-center transition"
                         >
                             <XMarkIcon class="h-3 w-3 mr-2" />
                             Cancle
                         </button>
-                        <button
+                        <button aria-label="true"
                             @click="submitCoverImage"
                             class="bg-gray-800 hover:bg-gray-900 text-gray-100 py-1 px-2 text-xs rounded flex items-center transition"
                         >
@@ -198,7 +198,7 @@ function followUser() {
                             class="w-full h-full object-cover rounded-full"
                         />
                         <template v-if="authUser && user.id === authUser.id">
-                            <button
+                            <button aria-label="true"
                                 v-if="!avatarImageSrc"
                                 class="absolute left-0 top-0 right-0 bottom-0 bg-black/50 text-gray-200 rounded-full flex items-center justify-center opacity-0 group-hover/avatar:opacity-100"
                             >
@@ -213,13 +213,13 @@ function followUser() {
                                 v-else
                                 class="absolute top-1 right-0 flex flex-col gap-2"
                             >
-                                <button
+                                <button aria-label="true"
                                     @click="cancleAvatarImage"
                                     class="w-7 h-7 flex items-center justify-center bg-red-500/80 text-white rounded-full"
                                 >
                                     <XMarkIcon class="h-5 w-5" />
                                 </button>
-                                <button
+                                <button aria-label="true"
                                     @click="submitAvatarImage"
                                     class="w-7 h-7 flex items-center justify-center bg-emerald-500/80 text-white rounded-full"
                                 >

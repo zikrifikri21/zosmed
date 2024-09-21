@@ -1,0 +1,19 @@
+.input-message {
+    @apply w-full px-4 py-2.5 text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+}
+
+.button-message {
+    @apply inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600;
+}
+.container-input-message{
+    @apply fixed bottom-0 start-0 z-50 w-full p-4 bg-white dark:bg-gray-800 dark:border-gray-600;
+}
+.send-message{
+    @apply flex flex-col sm:flex-row items-center justify-between w-full max-w-screen-md mx-auto;
+}
+.container-chat {
+    @apply sm:mx-20 h-auto sm:h-[500px] p-4 bg-white shadow-md rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300;
+}
+.send-file {
+    @apply inline-flex justify-center p-2 rounded-lg cursor-pointer text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600;
+}

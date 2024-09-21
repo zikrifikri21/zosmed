@@ -90,48 +90,23 @@ function toggleAud(video) {
 </script>
 <template>
     <template v-for="(attachment, ind) in attachments.slice(0, 4)">
-        <div
-            @click="$emit('attachmentClick', ind)"
-            class="group bg-white dark:bg-gray-900 flex flex-col items-center justify-center text-gray-500 relative cursor-pointer"
-        >
-            <img
-                v-if="isImage(attachment)"
-                :src="attachment.url"
-                :alt="attachment.name"
+        <div @click="$emit('attachmentClick', ind)"
+            class="group bg-white dark:bg-gray-900 flex flex-col items-center justify-center text-gray-500 relative cursor-pointer">
+            <img v-if="isImage(attachment)" :src="attachment.url" :alt="attachment.name"
                 class="object-cover w-full rounded-2xl"
-                :class="attachments.length > 2 ? 'h-48' : 'min-h-96 max-h-96 '"
-            />
-            <div
-                v-else-if="isVideo(attachment)"
-                class="relative text-white lg:mx-20 h-[500px] mb-3"
-            >
-                <button
-                    class="absolute bottom-1 right-1 w-8 h-8 z-20 flex items-end justify-end"
-                    @click.stop="toggleAud($refs[`videoPlayer${ind}`][0])"
-                >
-                    <component
-                        :is="isAudioIcon"
-                        class="shadow rounded-full bg-black/100 p-2"
-                    />
+                :class="attachments.length > 2 ? 'h-48' : 'min-h-96 max-h-96 '" />
+            <div v-else-if="isVideo(attachment)" class="relative text-white lg:mx-20 h-[500px] mb-3">
+                <button class="absolute bottom-1 right-1 w-8 h-8 z-20 flex items-end justify-end"
+                    @click.stop="toggleAud($refs[`videoPlayer${ind}`][0])" aria-label="Mute">
+                    <component :is="isAudioIcon" class="shadow rounded-full bg-black/100 p-2" />
                 </button>
-                <button
-                    @click.stop="
+                <button aria-label="Play" @click.stop="
                         playAndStopOnClick($refs[`videoPlayer${ind}`][0])
-                    "
-                    class="absolute top-0 left-0 w-full h-full z-10 flex items-center justify-center"
-                ></button>
-                <video
-                    v-if="attachment.url"
-                    :ref="`videoPlayer${ind}`"
-                    :src="attachment.url"
-                    class="w-full h-full"
-                    autoplay
-                    muted
-                    loop
-                    @loadedmetadata="
+                    " class="absolute top-0 left-0 w-full h-full z-10 flex items-center justify-center"></button>
+                <video v-if="attachment.url" :ref="`videoPlayer${ind}`" :src="attachment.url" class="w-full h-full"
+                    autoplay muted loop @loadedmetadata="
                         initializeIntersectionObserver($event.target)
-                    "
-                ></video>
+                    "></video>
             </div>
             <div v-else class="flex flex-col justify-center items-center">
                 <!-- <PaperClipIcon class="w-10 h-10 mb-3" />

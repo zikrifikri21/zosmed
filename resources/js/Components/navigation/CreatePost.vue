@@ -24,14 +24,10 @@ function showCreatePostModal() {
 }
 </script>
 <template>
-    <button
-        type="button"
-        @click="showCreatePostModal"
-        class="inline-flex flex-col items-center justify-center px-5"
-    >
+    <button aria-label="true" type="button" @click="showCreatePostModal"
+        class="inline-flex flex-col items-center justify-center px-5">
         <PlusIcon
-            class="w-6 h-6 mb-2 border-2 border-gray-800 dark:border-gray-100 rounded-md text-gray-800 dark:text-gray-100 hover:scale-110 transition-transform duration-300"
-        />
+            class="w-6 h-6 mb-2 border-2 border-gray-800 dark:border-gray-100 rounded-md text-gray-800 dark:text-gray-100 hover:scale-110 transition-transform duration-300" />
     </button>
     <PostModal :post="newPost" :group="group" v-model="showModal" />
 </template>

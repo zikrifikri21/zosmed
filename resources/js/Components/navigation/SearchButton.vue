@@ -21,6 +21,7 @@ function isSearch() {
 </script>
 <template>
     <button
+        aria-label="true"
         type="button"
         @click="openModal"
         class="inline-flex flex-col items-center justify-center px-5"

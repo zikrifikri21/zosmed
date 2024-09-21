@@ -20,7 +20,7 @@ defineProps({
         />
     </div>
 
-    <div class="mb-3">
+    <div class="mb-3 text-gray-800 dark:text-gray-300">
         <label for="auto_approval">
             <input
                 type="checkbox"

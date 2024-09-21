@@ -336,7 +336,7 @@ function matchLink() {
                                     {{
                                         post.id ? "Update Post" : "Create Post"
                                     }}
-                                    <button
+                                    <button aria-label="true"
                                         @click="closeModal"
                                         class="w-8 h-8 rounded-full hover:bg-black/5 transition flex items-center justify-center"
                                     >
@@ -379,7 +379,7 @@ function matchLink() {
                                             :preview="form.preview"
                                             :url="form.preview_url"
                                         />
-                                        <button
+                                        <button aria-label="true"
                                             @click="getAiContent"
                                             data-tooltip-target="tooltip-default"
                                             class="absolute top-2 right-2 w-8 h-8 rounded bg-indigo-500 hover:bg-indigo-600 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all"
@@ -449,7 +449,7 @@ function matchLink() {
                                                     />
                                                 </div>
 
-                                                <button
+                                                <button aria-label="true"
                                                     @click="removeFile(myFile)"
                                                     class="z-20 absolute top-3 right-3 w-7 h-7 flex items-center justify-center bg-black/30 text-white rounded-full hover:bg-black/40"
                                                 >
@@ -504,7 +504,7 @@ function matchLink() {
                                 </div>
 
                                 <div class="flex gap-2 py-5 px-4">
-                                    <button
+                                    <button aria-label="true"
                                         type="button"
                                         class="flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 w-full relative"
                                     >
@@ -518,7 +518,7 @@ function matchLink() {
                                             class="absolute left-0 bottom-0 top-0 right-0 opacity-0"
                                         />
                                     </button>
-                                    <button
+                                    <button aria-label="true"
                                         type="button"
                                         class="flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 w-full"
                                         :class="{

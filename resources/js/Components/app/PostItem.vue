@@ -143,8 +143,7 @@ function copyToClipboard() {
 </script>
 <template>
     <div
-        class="bg-white dark:bg-gray-900 dark:border-gray-700 text-gray-800 dark:text-gray-100 border rounded p-4 shadow mb-3"
-    >
+        class="bg-white dark:bg-gray-900 dark:border-gray-700 text-gray-800 dark:text-gray-100 border rounded p-4 shadow mb-3">
         <div class="flex justify-between">
             <PostUserHeader :post="post" />
             <div class="flex">
@@ -152,60 +151,36 @@ function copyToClipboard() {
                     <Pinned :className="'w-5 h-5 -mr-0'" />
                     <span class="text-xs">Pinned</span>
                 </div>
-                <EditDeleteDropdown
-                    :user="post.user"
-                    :post="post"
-                    @edit="openEditModal"
-                    @delete="deletePost"
-                    @pin="pinUnpinPost"
-                />
+                <EditDeleteDropdown :user="post.user" :post="post" @edit="openEditModal" @delete="deletePost"
+                    @pin="pinUnpinPost" />
             </div>
         </div>
 
-        <div
-            class="grid gap-3 mb-3"
-            :class="[
-                post.attachments.length === 1 ? 'grid-cols-1' : 'grid-cols-2',
-            ]"
-        >
-            <PostAttachments
-                :attachments="post.attachments"
-                @attachmentClick="openAttachment"
-            />
+        <div class="grid gap-3 mb-3" :class="[
+            post.attachments.length === 1 ? 'grid-cols-1' : 'grid-cols-2',
+        ]">
+            <PostAttachments :attachments="post.attachments" @attachmentClick="openAttachment" />
             <!-- @attachmentClick="openAttachment" -->
         </div>
         <Disclosure v-slot="{ open }">
             <div class="flex items-center justify-between">
                 <div class="grid grid-cols-2 items-center">
-                    <button
-                        @click="sendReaction"
-                        class="text-gray-800 dark:text-gray-100"
-                        :class="
-                            localUserHasReactions
-                                ? 'text-red-500 dark:text-red-500'
-                                : ''
-                        "
-                    >
-                        <transition
-                            name="like-btn-animation"
-                            mode="out-in"
-                            enter-active-class="transition ease-in duration-200 scale-70"
-                            enter-to-class="scale-100"
-                            leave-active-class="transition ease-out duration-150 scale-50"
-                        >
+                    <button aria-label="like" @click="sendReaction" class="text-gray-800 dark:text-gray-100" :class="localUserHasReactions
+                        ? 'text-red-500 dark:text-red-500'
+                        : ''
+                        ">
+                        <transition name="like-btn-animation" mode="out-in"
+                            enter-active-class="transition ease-in duration-200 scale-70" enter-to-class="scale-100"
+                            leave-active-class="transition ease-out duration-150 scale-50">
                             <component :is="likeIcon" class="w-7 h-7" />
                         </transition>
                     </button>
                     <DisclosureButton class="text-gray-800 dark:text-gray-100">
-                        <ChatBubbleOvalLeftIcon
-                            class="w-7 h-7 mr-2 transform scale-x-[-1]"
-                        />
+                        <ChatBubbleOvalLeftIcon class="w-7 h-7 mr-2 transform scale-x-[-1]" />
                     </DisclosureButton>
                 </div>
-                <button @click="copyToClipboard">
-                    <PaperAirplaneIcon
-                        class="w-7 h-7 text-gray-800 dark:text-gray-100 -rotate-45"
-                    />
+                <button aria-label="copy link" @click="copyToClipboard">
+                    <PaperAirplaneIcon class="w-7 h-7 text-gray-800 dark:text-gray-100 -rotate-45" />
                 </button>
             </div>
             <div class="mb-3">
@@ -214,31 +189,21 @@ function copyToClipboard() {
                         {{ localNumOfReactions }} likes
                     </span>
                 </div>
-                <ReadMoreReadLess
-                    :content="postBody"
-                    :uploader="post.user.name"
-                />
+                <ReadMoreReadLess :content="postBody" :uploader="post.user.name" />
                 <UrlPreview :preview="post.preview" :url="post.preview_url" />
                 <DisclosureButton class="mr-2 text-sm text-gray-400">
                     View all {{ post.num_of_comments }} Comment
                 </DisclosureButton>
             </div>
 
-            <DisclosurePanel
-                class="comment-list mt-3 max-h-[400px] lg:flex-1 overflow-auto"
-            >
+            <DisclosurePanel class="comment-list mt-3 max-h-[400px] lg:flex-1 overflow-auto">
                 <template v-if="!authUser">
-                    <Link
-                        :href="route('login')"
-                        class="text-sm flex justify-center text-gray-400 dark:text-gray-500"
-                        >Login to comment
+                    <Link :href="route('login')" class="text-sm flex justify-center text-gray-400 dark:text-gray-500"
+                        aria-label="Login to comment">Login to comment
                     </Link>
                 </template>
                 <template v-else>
-                    <CommentList
-                        :post="post"
-                        :data="{ comments: post.comments }"
-                    />
+                    <CommentList :post="post" :data="{ comments: post.comments }" />
                 </template>
             </DisclosurePanel>
         </Disclosure>

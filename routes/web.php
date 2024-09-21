@@ -1,16 +1,14 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\GroupController;
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OauthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
-use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +19,7 @@ use Laravel\Socialite\Facades\Socialite;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::controller(OauthController::class)->group(function () {
     Route::get('auth/google', 'redirectToGoogle')->name('auth.google');
@@ -37,11 +35,19 @@ Route::get('/u/{user:username}', [ProfileController::class, 'index'])
 Route::get('/g/{group:slug}', [GroupController::class, 'profile'])
     ->name('group.profile');
 
-
 Route::get('/group/approve-invitation/{token}', [GroupController::class, 'approveInvitation'])
     ->name('group.approveInvitation');
 
 Route::middleware('auth')->group(function () {
+
+    //chat message
+    Route::get('all-friends', [ChatController::class, 'index'])->name('chat.all');
+    Route::get('/chat/{friend}', [ChatController::class, 'chatroom'])->name('chat');
+    Route::get('/messages/{friend}', [ChatController::class, 'message']);
+    Route::post('/messages/{friend}', [ChatController::class, 'sendMessage']);
+    Route::post('/messages/{friend}/files', [ChatController::class, 'sendFiles']);
+    Route::get('/messages-download/{file}', [ChatController::class, 'downloadFile'])->name('download.file');
+
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

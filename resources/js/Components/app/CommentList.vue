@@ -32,6 +32,10 @@ const props = defineProps({
         type: [Object, null],
         default: null,
     },
+    depth: {
+        type: Number,
+        default: 0 // nilai default di level komentar pertama
+    }
 });
 
 const emit = defineEmits(["commentCreate", "commentDelete"]);
@@ -135,54 +139,36 @@ function onCommentDelete(comment) {
 // };
 </script>
 <template>
-    <div class="flex gap-2 mb-3">
+    <div class="flex gap-2 mb-3 items-center">
         <a href="javascript:void(0)">
-            <img
-                :src="authUser.avatar_url"
-                alt=""
-                class="w-[40px] h-[40px] object-cover rounded-full border-2 transition-all hover:border-blue-400"
-            />
+            <img :src="authUser.avatar_url" :alt="'zosmed' + authUser.username"
+                class="w-[40px] h-[40px] object-cover rounded-full border-2 transition-all hover:border-blue-400" />
         </a>
         <div class="relative flex flex-1 px-1 pt-1">
-            <InputTextarea
-                v-model="newCommentText"
-                placeholder="add a comment..."
-                rows="1"
-                class="w-full resize-none block overflow-hidden"
-            />
-            <button
+            <InputTextarea v-model="newCommentText" placeholder="add a comment..." rows="1"
+                class="w-full resize-none block overflow-hidden" />
+            <button aria-label="send comment"
                 class="text-white absolute end-2.5 bottom-1.5 bg-blue-700 hover:bg-blue-800 font-medium rounded-md text-sm px-2 py-[5px]"
-                @click="createComment"
-            >
+                @click="createComment">
                 <PaperAirplaneIcon class="w-5 h-5" />
             </button>
         </div>
     </div>
     <div>
         <div>
-            <div
-                v-for="comment in data.comments"
-                :key="comment.id"
-                class="mb-4"
-            >
+            <div v-for="comment in data.comments" :key="comment.id" class="mb-2">
                 <div class="flex justify-between gap-2">
                     <div class="flex gap-2">
-                        <Link :href="route('profile', comment.user.username)">
-                            <img
-                                :src="comment.user.avatar_url"
-                                alt=""
-                                class="w-[40px] h-[40px] object-cover rounded-full border-2 transition-all hover:border-blue-400"
-                            />
+                        <Link :href="route('profile', comment.user.username)" aria-label="comment user">
+                        <img :src="comment.user.avatar_url" alt=""
+                            class="w-[40px] h-[40px] object-cover rounded-full border-2 transition-all hover:border-blue-400"
+                            :alt="'zosmed' + comment.user.username" />
                         </Link>
                         <div class="flex flex-row items-center gap-2">
                             <h4 class="font-bold">
-                                <Link
-                                    :href="
-                                        route('profile', comment.user.username)
-                                    "
-                                    class="hover:underline"
-                                >
-                                    {{ comment.user.name }}
+                                <Link :href="route('profile', comment.user.username)
+                                    " class="hover:underline" aria-label="comment user">
+                                {{ comment.user.name }}
                                 </Link>
                             </h4>
                             <small class="text-gray-400 text-[11px]">
@@ -190,31 +176,17 @@ function onCommentDelete(comment) {
                             </small>
                         </div>
                     </div>
-                    <EditDeleteDropdown
-                        :user="comment.user"
-                        :post="post"
-                        :comment="comment"
-                        @edit="startEditingComment(comment)"
-                        @delete="deleteComment(comment)"
-                    />
+                    <EditDeleteDropdown :user="comment.user" :post="post" :comment="comment"
+                        @edit="startEditingComment(comment)" @delete="deleteComment(comment)" />
                 </div>
-                <div class="pl-12">
-                    <div
-                        v-if="
-                            editingComment && editingComment.id === comment.id
-                        "
-                    >
-                        <InputTextarea
-                            v-model="editingComment.comment"
-                            placeholder="add a comment..."
-                            rows="1"
-                            class="w-full max-h-[160px] resize-none"
-                        />
+                <div :class="{ 'pl-12': depth === 0 }">
+                    <div v-if="
+                        editingComment && editingComment.id === comment.id
+                    ">
+                        <InputTextarea v-model="editingComment.comment" placeholder="add a comment..." rows="1"
+                            class="w-full max-h-[160px] resize-none" />
                         <div class="flex gap-2 justify-end">
-                            <DangerButton
-                                class="h-5"
-                                @click="editingComment = null"
-                            >
+                            <DangerButton class="h-5" @click="editingComment = null">
                                 <XMarkIcon class="w-4 h-4" />
                             </DangerButton>
                             <IndigoButton class="h-5" @click="updateComment">
@@ -222,26 +194,17 @@ function onCommentDelete(comment) {
                             </IndigoButton>
                         </div>
                     </div>
-                    <ReadMoreReadLess
-                        v-else
-                        :content="comment.comment"
-                        :uploader="comment.user.name"
-                        content-class="text-sm flex flex-1"
-                    />
+                    <ReadMoreReadLess v-else :content="comment.comment" :uploader="comment.user.name"
+                        content-class="text-sm flex flex-1" :classSubComment="depth >= 1 ? 'ml-12' : ''" />
                     <Disclosure>
-                        <div class="flex gap-2 mt-1">
-                            <button
-                                @click="sendCommentReaction(comment)"
-                                class="flex items-center text-xs text-indigo-500 py-0.5 px-1 rounded-lg"
-                                :class="[
+                        <div class="flex gap-2 mt-1" :class="{ 'ml-12': depth !== 0 }">
+                            <button @click="sendCommentReaction(comment)" aria-label="comment reaction"
+                                class="flex items-center text-xs text-indigo-500 py-0.5 px-1 rounded-lg" :class="[
                                     comment.curent_user_has_reactions
                                         ? 'bg-indigo-50 hover:bg-indigo-50 dark:bg-gray-800 dark:hover:bg-gray-800'
                                         : ' hover:bg-indigo-50 dark:hover:bg-gray-800',
-                                ]"
-                            >
-                                <template
-                                    v-if="comment.curent_user_has_reactions"
-                                >
+                                ]">
+                                <template v-if="comment.curent_user_has_reactions">
                                     <HeartIconSolid class="w-3 h-3 mr-1" />
                                 </template>
                                 <template v-else>
@@ -252,24 +215,17 @@ function onCommentDelete(comment) {
                                 </span>
                             </button>
                             <DisclosureButton
-                                class="flex items-center text-xs text-indigo-500 py-0.5 px-1 hover:bg-indigo-100 dark:hover:bg-gray-800 rounded-lg"
-                            >
-                                <ChatBubbleLeftEllipsisIcon
-                                    class="w-3 h-3 mr-1"
-                                />
+                                class="flex items-center text-xs text-indigo-500 py-0.5 px-1 hover:bg-indigo-100 dark:hover:bg-gray-800 rounded-lg">
+                                <ChatBubbleLeftEllipsisIcon class="w-3 h-3 mr-1" />
                                 <span class="mr-2">
                                     {{ comment.num_of_comments }}
                                 </span>
                             </DisclosureButton>
                         </div>
                         <DisclosurePanel class="mt-3">
-                            <CommentList
-                                :post="post"
-                                :data="{ comments: comment.comments }"
-                                :parent-comment="comment"
-                                @comment-create="onCommentCreate"
-                                @comment-delete="onCommentDelete"
-                            />
+                            <CommentList :post="post" :data="{ comments: comment.comments }" :parent-comment="comment"
+                                :depth="depth + 1" @comment-create="onCommentCreate"
+                                @comment-delete="onCommentDelete" />
                         </DisclosurePanel>
                     </Disclosure>
                 </div>

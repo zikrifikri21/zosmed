@@ -17,24 +17,20 @@ let text1 = timeAgo(props.post.updated_at);
 </script>
 <template>
     <div class="flex gap-2" :class="isModal ? 'items-center' : ''">
-        <Link :href="route('profile', post.user.username)">
-            <img
-                :src="post.user.avatar_url"
-                class="w-[40px] h-[40px] object-cover rounded-full border-2 transition-all hover:border-blue-400"
-            />
+        <Link :href="route('profile', post.user.username)" aria-label="Profile">
+        <img :src="post.user.avatar_url"
+            class="w-[40px] h-[40px] object-cover rounded-full border-2 transition-all hover:border-blue-400"
+            :alt="'zosmed' + post.user.username" />
         </Link>
         <div>
             <h4 class="flex items-center gap-2 font-bold leading-none">
-                <Link :href="route('profile', post.user.username)">
-                    {{ post.user.name }}
+                <Link :href="route('profile', post.user.username)" aria-label="Profile">
+                {{ post.user.name }}
                 </Link>
                 <template v-if="post.group">
                     <ChevronRightIcon class="w-4 h-4 text-gray-400" />
-                    <Link
-                        :href="route('group.profile', post.group.slug)"
-                        class="hover:underline"
-                    >
-                        {{ post.group.name }}
+                    <Link :href="route('group.profile', post.group.slug)" class="hover:underline" aria-label="Group">
+                    {{ post.group.name }}
                     </Link>
                 </template>
             </h4>
@@ -49,21 +45,25 @@ let text1 = timeAgo(props.post.updated_at);
 </template>
 <style>
 @keyframes slideUp {
+
     0%,
     25% {
         transform: translateY(100%);
         opacity: 0;
     }
+
     30%,
     45% {
         transform: translateY(0);
         opacity: 1;
     }
+
     50%,
     75% {
         transform: translateY(-100%);
         opacity: 0;
     }
+
     80%,
     100% {
         transform: translateY(100%);
